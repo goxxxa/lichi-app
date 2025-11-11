@@ -18,7 +18,7 @@ class LoadMoreData extends CatalogEvent {
 }
 
 class AddProductToCart extends CatalogEvent {
-  final Product product;
+  final Clothes product;
 
   AddProductToCart({required this.product});
 }

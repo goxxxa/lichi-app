@@ -78,7 +78,6 @@ class _SimpleSegmentedPickerState extends State<SimpleSegmentedPicker> {
               children: Category.values.asMap().entries.map((entry) {
                 int index = entry.key;
                 final isSelected = index == _selectedIndex;
-
                 return GestureDetector(
                   key: _itemKeys[index],
                   onTap: () {
@@ -106,10 +105,9 @@ class _SimpleSegmentedPickerState extends State<SimpleSegmentedPicker> {
                             color: isSelected ? Colors.black : Colors.grey,
                           ),
                         ),
-                        const SizedBox(height: 6),
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
-                          height: 3,
+                          height: 1,
                           width: isSelected ? 20 : 0,
                           decoration: BoxDecoration(
                             color: Colors.black,
