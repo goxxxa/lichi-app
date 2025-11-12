@@ -7,9 +7,9 @@ part 'drift_db.g.dart';
 @DataClassName('CartItemEntity')
 class CartItems extends Table {
   TextColumn get id => text()();
-  TextColumn get description => text()();
-  RealColumn get price => real()();
-  IntColumn get quantity => integer().withDefault(const Constant(1))();
+  TextColumn get name => text()();
+  IntColumn get price => integer()();
+  IntColumn get count => integer().withDefault(const Constant(1))();
   TextColumn get size => text()();
   TextColumn get photo => text()();
 
@@ -25,7 +25,7 @@ class AppDatabase extends _$AppDatabase {
 
   static QueryExecutor _openConnection() {
     return driftDatabase(
-      name: 'app_database',
+      name: 'lichi_database',
       native: const DriftNativeOptions(
         databaseDirectory: getApplicationSupportDirectory,
       ),
