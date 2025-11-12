@@ -1,15 +1,29 @@
-import 'package:lichi_api/lichi_api.dart';
+import 'package:lichi_app/features/cart/models/cart_model.dart';
 
 abstract class CartEvent {}
 
 class AddToCart extends CartEvent {
-  final Clothes product;
+  final CartModel clothes;
 
-  AddToCart({required this.product});
+  AddToCart({required this.clothes});
 }
 
-class DeleteFromCart extends CartEvent {}
+class LoadCartItems extends CartEvent {}
 
-class IncreaseProductCount extends CartEvent {}
+class RemoveFromCart extends CartEvent {
+  final String id;
 
-class DecreaseProductCount extends CartEvent {}
+  RemoveFromCart({required this.id});
+}
+
+class IncreaseProductCount extends CartEvent {
+  final String id;
+
+  IncreaseProductCount({required this.id});
+}
+
+class DecreaseProductCount extends CartEvent {
+  final String id;
+
+  DecreaseProductCount({required this.id});
+}
