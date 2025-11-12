@@ -12,7 +12,7 @@ class LoadExactProductsData extends CatalogEvent {
 
 class LoadMoreData extends CatalogEvent {
   final String type;
-  final int page;
+  final String page;
 
   LoadMoreData({required this.type, required this.page});
 }

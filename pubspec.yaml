@@ -38,6 +38,10 @@ dependencies:
     path: packages/lichi_api
   lichi_repository:
     path: packages/lichi_repository
+  cart_storage_api:
+    path: packages/cart_storage_api
+  cart_storage_repository:
+    path: packages/cart_storage_repository
   bloc: ^9.1.0
   freezed_annotation: ^2.4.1
   json_annotation: ^4.9.0
@@ -47,6 +51,9 @@ dependencies:
   drift_flutter: ^0.2.7
   rx: ^0.4.0
   rxdart: ^0.28.0
+  bloc_concurrency: ^0.3.0
+  hydrated_bloc: ^10.1.1
+  # bloc_concurrency: ^0.3.0
 
 dev_dependencies:
   flutter_test:

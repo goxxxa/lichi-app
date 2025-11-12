@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class EmptyCart extends StatelessWidget {
   const EmptyCart({super.key});
@@ -6,7 +6,11 @@ class EmptyCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Корзина пустая \n Добавьте все, что вы хотите.'),
+      child: Text(
+        'Корзина пустая \n Добавьте все, что вы хотите.',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.black),
+      ),
     );
   }
 }

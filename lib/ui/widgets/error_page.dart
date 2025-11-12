@@ -8,7 +8,7 @@ class ErrorPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Text('Произошла ошибка,пожалуйста, повторите позднее'),
+          Text('Произошла ошибка, пожалуйста, повторите позднее'),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black,

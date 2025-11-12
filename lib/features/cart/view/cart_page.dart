@@ -3,71 +3,96 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lichi_app/features/cart/bloc/cart_bloc.dart';
 import 'package:lichi_app/features/cart/bloc/cart_state.dart';
 import 'package:lichi_app/features/cart/widgets/cart_item.dart';
+import 'package:lichi_app/features/cart/widgets/empty_cart.dart';
+import 'package:lichi_app/ui/widgets/error_page.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final totalPrice = 0;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Корзина'),
+        centerTitle: true,
+        title: Text('Корзина'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           return state.when(
-            idle: () => const CircularProgressIndicator(),
-            processing: () => const CircularProgressIndicator(),
+            idle: () => const Center(child: CircularProgressIndicator()),
+            processing: () => const Center(child: CircularProgressIndicator()),
             loaded: (items) {
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: items.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 8),
-                      itemBuilder: (context, index) {
-                        return CartItem(data: items[index]);
-                      },
-                    ),
-                  ),
-                  const Divider(),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'К оплате',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+              final prices = items.map((t) => t.price * t.count).toList();
+              final totalPrice = prices.isNotEmpty
+                  ? prices.reduce((a, b) => a + b)
+                  : 0;
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  final estimatedHeight = items.length * 200.0;
+                  final isShortList =
+                      estimatedHeight < constraints.maxHeight * 0.6;
+                  return Stack(
+                    children: [
+                      CustomScrollView(
+                        slivers: [
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              return CartItem(cartModel: items[index]);
+                            }, childCount: items.length),
                           ),
+                          if (!isShortList)
+                            SliverToBoxAdapter(
+                              child: _BottomPriceBlock(totalPrice: totalPrice),
+                            ),
+                        ],
+                      ),
+                      if (isShortList)
+                        Positioned(
+                          bottom: 60,
+                          left: 12,
+                          child: _BottomPriceBlock(totalPrice: totalPrice),
                         ),
-                        Text(
-                          '$totalPrice руб.',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               );
             },
-            empty: () => const Text('data'),
-            error: () => const Text('Error'),
+            empty: () => const EmptyCart(),
+            error: () => const ErrorPage(),
           );
         },
       ),
+    );
+  }
+}
+
+class _BottomPriceBlock extends StatelessWidget {
+  final int totalPrice;
+
+  const _BottomPriceBlock({required this.totalPrice});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'К оплате',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          '$totalPrice руб.',
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 }

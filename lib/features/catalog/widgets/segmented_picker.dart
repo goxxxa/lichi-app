@@ -4,7 +4,7 @@ import 'package:lichi_app/features/catalog/bloc/catalog_bloc.dart';
 import 'package:lichi_app/features/catalog/bloc/catalog_event.dart';
 
 enum Category {
-  all('dresses'),
+  all('clothes'),
   dresses('dresses'),
   swimwear('swimsuits'),
   denim('denim'),
@@ -35,14 +35,16 @@ enum Category {
   }
 }
 
-class SimpleSegmentedPicker extends StatefulWidget {
-  const SimpleSegmentedPicker({super.key});
+class SegmentedPicker extends StatefulWidget {
+  const SegmentedPicker({super.key, required this.pageNotifier});
+
+  final ValueNotifier<int> pageNotifier;
 
   @override
-  _SimpleSegmentedPickerState createState() => _SimpleSegmentedPickerState();
+  _SegmentedPickerState createState() => _SegmentedPickerState();
 }
 
-class _SimpleSegmentedPickerState extends State<SimpleSegmentedPicker> {
+class _SegmentedPickerState extends State<SegmentedPicker> {
   int _selectedIndex = 0;
   final ScrollController _scrollController = ScrollController();
   final List<GlobalKey> _itemKeys = [];
@@ -51,18 +53,6 @@ class _SimpleSegmentedPickerState extends State<SimpleSegmentedPicker> {
   void initState() {
     super.initState();
     _itemKeys.addAll(List.generate(Category.values.length, (_) => GlobalKey()));
-  }
-
-  void _scrollToSelected(int index) {
-    final keyContext = _itemKeys[index].currentContext;
-    if (keyContext != null) {
-      Scrollable.ensureVisible(
-        keyContext,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        alignment: 0.5,
-      );
-    }
   }
 
   @override
@@ -84,6 +74,7 @@ class _SimpleSegmentedPickerState extends State<SimpleSegmentedPicker> {
                     setState(() {
                       _selectedIndex = index;
                     });
+                    widget.pageNotifier.value = 1;
                     _scrollToSelected(index);
                     context.read<CatalogBloc>().add(
                       LoadExactProductsData(type: entry.value.apiName),
@@ -95,16 +86,8 @@ class _SimpleSegmentedPickerState extends State<SimpleSegmentedPicker> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          entry.value.displayName,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: isSelected
-                                ? FontWeight.bold
-                                : FontWeight.w500,
-                            color: isSelected ? Colors.black : Colors.grey,
-                          ),
-                        ),
+                        Text(entry.value.displayName),
+                        // , style: AppTextStyles.h4),
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
                           height: 1,
@@ -124,5 +107,17 @@ class _SimpleSegmentedPickerState extends State<SimpleSegmentedPicker> {
         ],
       ),
     );
+  }
+
+  void _scrollToSelected(int index) {
+    final keyContext = _itemKeys[index].currentContext;
+    if (keyContext != null) {
+      Scrollable.ensureVisible(
+        keyContext,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        alignment: 0.5,
+      );
+    }
   }
 }
