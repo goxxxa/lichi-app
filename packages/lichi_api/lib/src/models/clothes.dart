@@ -6,9 +6,9 @@ part 'clothes.freezed.dart';
 @freezed
 class Clothes with _$Clothes {
   const factory Clothes({
+    required int id,
     required String name,
     required int price,
-    required String description,
     required ClothesColorsList colors,
     required List<Photo> photos,
     required List<Size> sizes,
@@ -25,10 +25,10 @@ class Clothes with _$Clothes {
           .take(3)
           .toList();
       if (photos.isEmpty) {
-        var test = photosJson
+        photos = photosJson
             .map((el) => Photo.fromJson(el as Map<String, dynamic>))
+            .take(3)
             .toList();
-        photos = [test[0], test[3], test[5]];
       }
     } else if (photosJson is Map<String, dynamic>) {
       photos = photosJson.values
@@ -52,9 +52,9 @@ class Clothes with _$Clothes {
     );
 
     return Clothes(
+      id: json['id'],
       name: json['name'] ?? '',
       price: json['price'] ?? 0,
-      description: json['descriptions']?['text'] ?? '',
       colors: colors,
       photos: photos,
       sizes: sizesList,

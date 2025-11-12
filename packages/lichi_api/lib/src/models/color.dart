@@ -3,8 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'color.freezed.dart';
 part 'color.g.dart';
 
-typedef JsonMap = Map<String, dynamic>;
-
 @freezed
 class ClothesColorsList with _$ClothesColorsList {
   const factory ClothesColorsList({
@@ -12,14 +10,14 @@ class ClothesColorsList with _$ClothesColorsList {
     required List<ClothesColor> other,
   }) = _ClothesColorsList;
 
-  factory ClothesColorsList.fromJson(JsonMap json) =>
+  factory ClothesColorsList.fromJson(Map<String, dynamic> json) =>
       _$ClothesColorsListFromJson(json);
 }
 
 @freezed
 class ClothesColor with _$ClothesColor {
-  const factory ClothesColor({required String name, required String value}) =
+  const factory ClothesColor({required String name, required String? value}) =
       _ClothesColor;
 
-  factory ClothesColor.fromJson(JsonMap json) => _$ClothesColorFromJson(json);
+  factory ClothesColor.fromJson(Map<String, dynamic> json) => _$ClothesColorFromJson(json);
 }
