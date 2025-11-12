@@ -1,4 +1,4 @@
-import 'package:lichi_api/lichi_api.dart' show LichiApiClient;
+import 'package:lichi_api/lichi_api.dart' hide Clothes;
 import 'package:lichi_repository/lichi_repository.dart';
 
 class LichiRepository {
@@ -19,7 +19,6 @@ class LichiRepository {
       final currentClothes = clothes.map((t) => Clothes.fromApi(t)).toList();
       return currentClothes;
     } on Exception catch (e) {
-      print(e);
       return [];
     }
   }
