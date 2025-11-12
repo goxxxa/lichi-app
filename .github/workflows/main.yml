@@ -1,39 +1,47 @@
 name: Flutter CI
 
 on:
-    push:
-        branches:
-            - main
-            - develop
+  push:
+    branches:
+      - main
+      - develop
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout repo
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-            - name: Set up Flutter
-              uses: subosito/flutter-action@v2
-              with:
-                  flutter-version: 3.32.0
-                  channel: stable
-                  cache: true
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.32.0
+          channel: stable
+          cache: true
 
-            - name: Cache Pub dependencies
-              uses: actions/cache@v3
-              with:
-                  path: ~/.pub-cache
-                  key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pub-
+      - name: Cache Pub dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
 
-            - name: Install dependencies
-              run: flutter pub get
+      - name: Get dependencies (root)
+        run: flutter pub get
 
-            - name: Code generation
-              run: dart run build_runner build --delete-conflicting-outputs
+      - name: Code generation (root)
+        run: dart run build_runner build --delete-conflicting-outputs
 
-            - name: Build Flutter app (APK)
-              run: flutter build apk --release
+      - name: Code generation (lichi_api)
+        run: dart run build_runner build --delete-conflicting-outputs
+        working-directory: packages/lichi_api
+
+      - name: Code generation (lichi_repository)
+        run: dart run build_runner build --delete-conflicting-outputs
+        working-directory: packages/lichi_repository
+
+      - name: Build Flutter app (APK)
+        run: flutter build apk --release
