@@ -4,6 +4,7 @@ import 'package:lichi_app/features/cart/bloc/cart_bloc.dart';
 import 'package:lichi_app/features/cart/bloc/cart_state.dart';
 import 'package:lichi_app/features/cart/widgets/cart_item.dart';
 import 'package:lichi_app/features/cart/widgets/empty_cart.dart';
+import 'package:lichi_app/ui/theme/lichi_app_theme.dart';
 import 'package:lichi_app/ui/widgets/error_page.dart';
 
 class CartPage extends StatelessWidget {
@@ -65,7 +66,7 @@ class CartPage extends StatelessWidget {
               );
             },
             empty: () => const EmptyCart(),
-            error: () => const ErrorPage(),
+            error: () => const ErrorPage(type: 'cart'),
           );
         },
       ),
@@ -80,19 +81,16 @@ class _BottomPriceBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'К оплате',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          '$totalPrice руб.',
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('К оплате', style: AppStyles.label),
+          const SizedBox(height: 6),
+          Text('$totalPrice руб.', style: AppStyles.amount),
+        ],
+      ),
     );
   }
 }

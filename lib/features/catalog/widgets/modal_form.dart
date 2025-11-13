@@ -29,7 +29,7 @@ class ModalForm extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
                 letterSpacing: -0.408,
-                color: Colors.black,
+                // color: Colors.black,
               ),
             ),
             const SizedBox(height: 12),
@@ -52,11 +52,9 @@ class ModalForm extends StatelessWidget {
                       onTap: isAvailable
                           ? () {
                               if (_selectedIndexNotifier.value == index) {
-                                _selectedIndexNotifier.value =
-                                    null;
+                                _selectedIndexNotifier.value = null;
                               } else {
-                                _selectedIndexNotifier.value =
-                                    index;
+                                _selectedIndexNotifier.value = index;
                               }
                             }
                           : null,
@@ -77,7 +75,7 @@ class ModalForm extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 letterSpacing: -0.408,
-                                color: Colors.black,
+                                // color: Colors.black,
                               ),
                             ),
                             AnimatedSwitcher(
@@ -88,7 +86,7 @@ class ModalForm extends StatelessWidget {
                                   ? (isSelected
                                         ? const Icon(
                                             Icons.check_rounded,
-                                            color: Colors.black,
+                                            // color: Colors.black,
                                             size: 20,
                                           )
                                         : const SizedBox(width: 20, height: 20))
@@ -114,8 +112,8 @@ class ModalForm extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _selectedIndexNotifier.value == null
                         ? Colors.grey
-                        : Colors.black,
-                    foregroundColor: Colors.white,
+                        : Theme.of(context).colorScheme.primary,
+                    // foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100),
                     ),
@@ -135,7 +133,11 @@ class ModalForm extends StatelessWidget {
                       : null,
                   child: Text(
                     'В корзину · ${clothes.price} ₽',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ),
               ),

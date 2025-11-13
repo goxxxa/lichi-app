@@ -18,7 +18,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _onAddToCart(AddToCart event, Emitter<CartState> emit) async {
     emit(const CartState.processing());
-    await _storageRepository.addToCart(event.clothes);
+    try {
+      await _storageRepository.addToCart(event.clothes);
+    } on Exception {
+      emit(const CartState.error());
+    }
     final updated = await _storageRepository.getAllCartItems();
     emit(CartState.loaded(updated));
   }
@@ -28,10 +32,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) async {
     emit(const CartState.processing());
-    final items = await _storageRepository.getAllCartItems();
-    items.isEmpty
-        ? emit(const CartState.empty())
-        : emit(CartState.loaded(items));
+    try {
+      final items = await _storageRepository.getAllCartItems();
+      items.isEmpty
+          ? emit(const CartState.empty())
+          : emit(CartState.loaded(items));
+    } on Exception {
+      emit(const CartState.error());
+    }
   }
 
   Future<void> _onRemoveFromCart(
@@ -39,32 +47,44 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) async {
     emit(const CartState.processing());
-    await _storageRepository.deleteFromCart(event.id);
-    final updated = await _storageRepository.getAllCartItems();
-    updated.isEmpty
-        ? emit(const CartState.empty())
-        : emit(CartState.loaded(updated));
+    try {
+      await _storageRepository.deleteFromCart(event.id);
+      final updated = await _storageRepository.getAllCartItems();
+      updated.isEmpty
+          ? emit(const CartState.empty())
+          : emit(CartState.loaded(updated));
+    } on Exception {
+      emit(const CartState.error());
+    }
   }
 
   Future<void> _onIncreaseProductCount(
     IncreaseProductCount event,
     Emitter<CartState> emit,
   ) async {
-    await _storageRepository.increaseProductCount(event.id);
-    final items = await _storageRepository.getAllCartItems();
-    items.isEmpty
-        ? emit(const CartState.empty())
-        : emit(CartState.loaded(items));
+    try {
+      await _storageRepository.increaseProductCount(event.id);
+      final items = await _storageRepository.getAllCartItems();
+      items.isEmpty
+          ? emit(const CartState.empty())
+          : emit(CartState.loaded(items));
+    } on Exception {
+      emit(const CartState.error());
+    }
   }
 
   Future<void> _onDecreaseProductCount(
     DecreaseProductCount event,
     Emitter<CartState> emit,
   ) async {
-    await _storageRepository.decreaseProductCount(event.id);
-    final items = await _storageRepository.getAllCartItems();
-    items.isEmpty
-        ? emit(const CartState.empty())
-        : emit(CartState.loaded(items));
+    try {
+      await _storageRepository.decreaseProductCount(event.id);
+      final items = await _storageRepository.getAllCartItems();
+      items.isEmpty
+          ? emit(const CartState.empty())
+          : emit(CartState.loaded(items));
+    } on Exception {
+      emit(const CartState.error());
+    }
   }
 }

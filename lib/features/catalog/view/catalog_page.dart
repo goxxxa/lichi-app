@@ -90,7 +90,7 @@ class _CatalogViewState extends State<CatalogView> {
                   child: Container(
                     margin: const EdgeInsets.only(right: 12),
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(100),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -110,10 +110,14 @@ class _CatalogViewState extends State<CatalogView> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
                             SizedBox(width: 8),
-                            Icon(Icons.shopping_bag),
+                            Icon(
+                              Icons.shopping_bag,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                           ],
                         );
                       },
@@ -126,6 +130,7 @@ class _CatalogViewState extends State<CatalogView> {
             SliverToBoxAdapter(
               child: Text(
                 'Каждый день тысячи девушек распаковывают пакеты с новинками Lichi и становятся счастливее, ведь очевидно, что новое платье может изменить день, а с ним и всю жизнь!',
+                style: AppStyles.h6,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -141,12 +146,15 @@ class _CatalogViewState extends State<CatalogView> {
                   idle: () => const SliverToBoxAdapter(
                     child: Center(child: CircularProgressIndicator()),
                   ),
-                  processing: () => const SliverToBoxAdapter(
+                  processing: () => SliverToBoxAdapter(
                     child: Center(
-                      child: CircularProgressIndicator(color: Colors.black),
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
-                  error: () => const SliverToBoxAdapter(child: ErrorPage()),
+                  error: () =>
+                      SliverToBoxAdapter(child: ErrorPage(type: 'catalog')),
                   empty: () => const SliverToBoxAdapter(child: EmptyList()),
                   loaded: (clothes, category) => SliverList(
                     delegate: SliverChildBuilderDelegate((context, rowIndex) {
