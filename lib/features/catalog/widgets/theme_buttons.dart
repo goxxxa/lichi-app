@@ -11,25 +11,31 @@ class ThemeButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(child: _themeButton('Темная тема', false, cubit)),
+        Expanded(child: _themeButton('Темная тема', false, cubit, context)),
         const SizedBox(width: 8),
-        Expanded(child: _themeButton('Светлая тема', true, cubit)),
+        Expanded(child: _themeButton('Светлая тема', true, cubit, context)),
       ],
     );
   }
 }
 
-Widget _themeButton(String text, bool dark, ThemeCubit cubit) {
+Widget _themeButton(
+  String text,
+  bool dark,
+  ThemeCubit cubit,
+  BuildContext context,
+) {
   return InkWell(
     onTap: () {
-      print('hui');
       cubit.toggleTheme();
     },
     borderRadius: BorderRadius.circular(20),
     child: Container(
       height: 86,
       decoration: BoxDecoration(
-        color: dark ? Colors.black : const Color(0xFFF9F9F9),
+        color: dark
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -37,13 +43,20 @@ Widget _themeButton(String text, bool dark, ThemeCubit cubit) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           dark
-              ? Icon(Icons.light_mode, color: Colors.white)
+              ? Icon(
+                  Icons.light_mode,
+                  color: dark
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : Theme.of(context).colorScheme.onSurface,
+                )
               : Icon(Icons.dark_mode),
           const SizedBox(width: 8),
           Text(
             text,
             style: TextStyle(
-              color: dark ? Colors.white : Colors.black,
+              color: dark
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).colorScheme.onSurface,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),

@@ -27,6 +27,11 @@ class LichiAppTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.black,
       surface: Colors.white,
+      onSurface: Colors.black,
+      primary: Colors.black,
+      onPrimary: Colors.white,
+      secondary: const Color(0xFFF9F9F9),
+      onSecondary: const Color.fromARGB(255, 68, 67, 67),
     ),
     textTheme: GoogleFonts.openSansTextTheme().copyWith(
       headlineLarge: GoogleFonts.openSans(
@@ -76,6 +81,11 @@ class LichiAppTheme {
       seedColor: Colors.white,
       brightness: Brightness.dark,
       surface: Colors.black,
+      onSurface: Colors.white,
+      primary: Colors.white,
+      onPrimary: Colors.black,
+      secondary: const Color.fromARGB(255, 68, 67, 67),
+      onSecondary: const Color(0xFFF9F9F9),
     ),
     textTheme: GoogleFonts.openSansTextTheme().copyWith(
       headlineLarge: GoogleFonts.openSans(
@@ -104,149 +114,83 @@ class LichiAppTheme {
   );
 }
 
-// class AppTheme {
-//   // ===== Цвета =====
-//   static const Color lightBackground = Color(0xFFFFFFFF);
-//   static const Color darkBackground = Color(0xFF000000);
+class AppStyles {
+  static final TextStyle label = GoogleFonts.rubik(
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w300,
+    fontSize: 14,
+    letterSpacing: -0.408,
+  );
 
-//   static const Color lightText = Color(0xFF000000);
-//   static const Color darkText = Color(0xFFFFFFFF);
+  static final TextStyle amount = GoogleFonts.rubik(
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w600,
+    fontSize: 30,
+    letterSpacing: -0.408,
+  );
 
-//   static const Color accentBlack = Color(0xFF000000);
-//   static const Color accentWhite = Color(0xFFFFFFFF);
-//   static const Color greyText = Color(0xFF888888);
-//   static const Color greyBackground = Color(0xFFF9F9F9);
+  static const TextStyle description = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+    height: 1.5,
+    letterSpacing: -0.408,
+    textBaseline: TextBaseline.alphabetic,
+  );
 
-//   // ===== Текстовые стили =====
-//   // Описание
-//   static const TextStyle description = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w300,
-//     fontSize: 13,
-//     height: 1.5, // line-height 150%
-//     letterSpacing: -0.408,
-//     color: lightText,
-//     textBaseline: TextBaseline.alphabetic,
-//   );
+  static const TextStyle descriptionSmall = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+    height: 1.69,
+    letterSpacing: -0.408,
+  );
 
-//   static const TextStyle descriptionSmall = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w300,
-//     fontSize: 13,
-//     height: 1.69, // line-height 169%
-//     letterSpacing: -0.408,
-//     color: lightText,
-//   );
+  static const TextStyle h1 = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w400,
+    fontSize: 30,
+    height: 22 / 30,
+    letterSpacing: -0.408,
+  );
 
-//   // Заголовки
-//   static const TextStyle h1 = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w400,
-//     fontSize: 30,
-//     height: 22 / 30,
-//     letterSpacing: -0.408,
-//     color: lightText,
-//   );
+  static const TextStyle h2 = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w400,
+    fontSize: 25,
+    height: 22 / 25,
+    letterSpacing: -0.408,
+  );
 
-//   static const TextStyle h2 = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w400,
-//     fontSize: 25,
-//     height: 22 / 25,
-//     letterSpacing: -0.408,
-//     color: lightText,
-//   );
+  static const TextStyle h3 = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w400,
+    fontSize: 20,
+    height: 22 / 20,
+    letterSpacing: -0.408,
+  );
 
-//   static const TextStyle h3 = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w400,
-//     fontSize: 20,
-//     height: 22 / 20,
-//     letterSpacing: -0.408,
-//     color: lightText,
-//   );
+  static const TextStyle h4 = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    height: 22 / 16,
+    letterSpacing: -0.408,
+  );
 
-//   static const TextStyle h4 = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w400,
-//     fontSize: 16,
-//     height: 22 / 16,
-//     letterSpacing: -0.408,
-//     color: lightText,
-//   );
+  static const TextStyle h5 = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w300,
+    fontSize: 14,
+    height: 22 / 14,
+    letterSpacing: -0.408,
+  );
 
-//   static const TextStyle h5 = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w300,
-//     fontSize: 14,
-//     height: 22 / 14,
-//     letterSpacing: -0.408,
-//     color: lightText,
-//   );
-
-//   static const TextStyle h6 = TextStyle(
-//     fontFamily: 'Open Sans',
-//     fontWeight: FontWeight.w300,
-//     fontSize: 13,
-//     height: 22 / 13,
-//     letterSpacing: -0.408,
-//     color: lightText,
-//   );
-
-//   // ===== Темы =====
-//   static final ThemeData lightTheme = ThemeData(
-//     brightness: Brightness.light,
-//     scaffoldBackgroundColor: lightBackground,
-//     primaryColor: accentBlack,
-//     appBarTheme: const AppBarTheme(
-//       color: lightBackground,
-//       iconTheme: IconThemeData(color: lightText),
-//       titleTextStyle: h4,
-//     ),
-//     textTheme: TextTheme(
-//       bodyLarge: description,
-//       bodyMedium: descriptionSmall,
-//       headlineLarge: h1,
-//       headlineMedium: h2,
-//       headlineSmall: h3,
-//       titleLarge: h4,
-//       titleMedium: h5,
-//       titleSmall: h6,
-//     ),
-//     elevatedButtonTheme: ElevatedButtonThemeData(
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: accentBlack,
-//         foregroundColor: accentWhite,
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-//       ),
-//     ),
-//   );
-
-//   static final ThemeData darkTheme = ThemeData(
-//     brightness: Brightness.dark,
-//     scaffoldBackgroundColor: darkBackground,
-//     primaryColor: accentWhite,
-//     appBarTheme: const AppBarTheme(
-//       color: darkBackground,
-//       iconTheme: IconThemeData(color: darkText),
-//       titleTextStyle: h4,
-//     ),
-//     textTheme: TextTheme(
-//       bodyLarge: description,
-//       bodyMedium: descriptionSmall,
-//       headlineLarge: h1,
-//       headlineMedium: h2,
-//       headlineSmall: h3,
-//       titleLarge: h4,
-//       titleMedium: h5,
-//       titleSmall: h6,
-//     ),
-//     elevatedButtonTheme: ElevatedButtonThemeData(
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: accentWhite,
-//         foregroundColor: accentBlack,
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-//       ),
-//     ),
-//   );
-// }
+  static const TextStyle h6 = TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+    height: 22 / 13,
+    letterSpacing: -0.408,
+  );
+}
