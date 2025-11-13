@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lichi_app/features/cart/bloc/cart_bloc.dart';
 import 'package:lichi_app/features/cart/bloc/cart_event.dart';
 import 'package:lichi_app/features/cart/cart.dart';
+import 'package:lichi_app/ui/ui.dart';
 
 class CartItem extends StatelessWidget {
   final CartModel cartModel;
@@ -37,7 +38,7 @@ class CartItem extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     cartModel.name,
-                    style: const TextStyle(fontSize: 14),
+                    style: AppStyles.h4,
                     maxLines: 2,
                     overflow: TextOverflow.visible,
                   ),
@@ -45,15 +46,12 @@ class CartItem extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '${cartModel.size}',
-                  style: const TextStyle(color: Colors.grey),
+                  style: AppStyles.h5,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   '${cartModel.price} руб.',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppStyles.h4,
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -66,7 +64,6 @@ class CartItem extends StatelessWidget {
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
-                              color: Color(0xFFF9F9F9),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(Icons.remove, size: 15),
@@ -87,7 +84,6 @@ class CartItem extends StatelessWidget {
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
-                              color: Color(0xFFF9F9F9),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(Icons.add, size: 15),

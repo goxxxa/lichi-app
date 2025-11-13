@@ -9,7 +9,7 @@ class EmptyCart extends StatelessWidget {
       child: Text(
         'Корзина пустая \n Добавьте все, что вы хотите.',
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black),
+        // style: TextStyle(color: Colors.black),
       ),
     );
   }

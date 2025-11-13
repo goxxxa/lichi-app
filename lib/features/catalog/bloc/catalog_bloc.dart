@@ -25,15 +25,18 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     Emitter<CatalogState> emit,
   ) async {
     emit(const CatalogState.processing());
+    try {
+      final response = await _lichiRepository.getClothes(category: 'clothes');
+      if (response.isEmpty) {
+        emit(const CatalogState.empty());
+        return;
+      }
 
-    final response = await _lichiRepository.getClothes(category: 'clothes');
-    if (response.isEmpty) {
-      emit(const CatalogState.empty());
-      return;
+      final clothes = response.map(Clothes.fromRepository).toList();
+      emit(CatalogState.loaded(clothes, 'clothes'));
+    } on Exception {
+      emit(const CatalogState.error());
     }
-
-    final clothes = response.map(Clothes.fromRepository).toList();
-    emit(CatalogState.loaded(clothes, 'clothes'));
   }
 
   Future<void> _onLoadExactData(
@@ -41,34 +44,41 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     Emitter<CatalogState> emit,
   ) async {
     emit(const CatalogState.processing());
+    try {
+      final response = await _lichiRepository.getClothes(category: event.type);
+      final clothes = response.map(Clothes.fromRepository).toList();
 
-    final response = await _lichiRepository.getClothes(category: event.type);
-    final clothes = response.map(Clothes.fromRepository).toList();
-
-    emit(CatalogState.loaded(clothes, event.type));
+      emit(CatalogState.loaded(clothes, event.type));
+    } on Exception {
+      emit(const CatalogState.error());
+    }
   }
 
   Future<void> _onLoadMoreData(
     LoadMoreData event,
     Emitter<CatalogState> emit,
   ) async {
-    final currentState = state as LoadedState;
-    print(currentState.category);
-    final response = await _lichiRepository.getClothes(
-      category: currentState.category,
-      page: event.page,
-    );
-
-    final newClothes = response.map(Clothes.fromRepository).toList();
-
-    print(newClothes.length);
-
-    emit(
-      currentState.copyWith(
-        clothes: [...currentState.clothes, ...newClothes],
+    try {
+      final currentState = state as LoadedState;
+      print(currentState.category);
+      final response = await _lichiRepository.getClothes(
         category: currentState.category,
-      ),
-    );
+        page: event.page,
+      );
+
+      final newClothes = response.map(Clothes.fromRepository).toList();
+
+      print(newClothes.length);
+
+      emit(
+        currentState.copyWith(
+          clothes: [...currentState.clothes, ...newClothes],
+          category: currentState.category,
+        ),
+      );
+    } on Exception {
+      emit(const CatalogState.error());
+    }
   }
 }
 

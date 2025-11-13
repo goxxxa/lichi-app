@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lichi_app/features/cart/bloc/cart_bloc.dart';
 import 'package:lichi_app/features/catalog/models/clothes.dart';
 import 'package:lichi_app/features/catalog/widgets/widgets.dart';
+import 'package:lichi_app/ui/theme/lichi_app_theme.dart';
 
 class CatalogCard extends StatefulWidget {
   final Clothes clothes;
@@ -98,19 +99,14 @@ class _CatalogCardState extends State<CatalogCard> {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Text(
-                    '${widget.clothes.price} руб.',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
+                  Text('${widget.clothes.price} руб.', style: AppStyles.h4),
                   const SizedBox(height: 6),
                   Text(
                     widget.clothes.name,
                     textAlign: TextAlign.center,
                     maxLines: 3,
                     overflow: TextOverflow.clip,
+                    style: AppStyles.h5,
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -122,6 +118,14 @@ class _CatalogCardState extends State<CatalogCard> {
                             width: 10,
                             height: 10,
                             decoration: BoxDecoration(
+                              border: BoxBorder.all(
+                                color:
+                                    Theme.of(context).brightness ==
+                                            Brightness.light &&
+                                        color == Colors.white
+                                    ? Colors.black
+                                    : Colors.white,
+                              ),
                               color: color,
                               shape: BoxShape.circle,
                             ),
@@ -171,7 +175,7 @@ void showTopSnack(BuildContext context) {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(12),
               bottomRight: Radius.circular(12),
@@ -187,7 +191,7 @@ void showTopSnack(BuildContext context) {
           child: Center(
             child: Text(
               'Товар успешно добавлен в корзину',
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
             ),
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lichi_app/features/catalog/bloc/catalog_bloc.dart';
 import 'package:lichi_app/features/catalog/bloc/catalog_event.dart';
+import 'package:lichi_app/ui/theme/lichi_app_theme.dart';
 
 enum Category {
   all('clothes'),
@@ -86,14 +87,13 @@ class _SegmentedPickerState extends State<SegmentedPicker> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(entry.value.displayName),
-                        // , style: AppTextStyles.h4),
+                        Text(entry.value.displayName, style: AppStyles.h5),
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
                           height: 1,
                           width: isSelected ? 20 : 0,
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
